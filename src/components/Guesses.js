@@ -51,7 +51,7 @@ return (
                     
                 </div>
                 <div className="clue-buttons" id="guesses-remaining">
-                    <h3> Guesses Remaining: {props.score.guessesRemaining}
+                    <h3> Guesses Remaining: {props.score.incorrectGuessesRemaining}
                     </h3>
                 </div>
                 <div id="total-word-size">
