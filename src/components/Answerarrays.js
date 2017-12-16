@@ -7,6 +7,7 @@ const answerarrays = props => {
 return (
     <div>
         <Well>
+              <h3> Correct Guesses:</h3
             <ButtonGroup> 
         {props
         .answer
@@ -21,6 +22,7 @@ return (
                 </ButtonGroup>
             </Well>
         <Well> 
+            <h3> Incorrect Guesses:</h3>
             <ButtonGroup>
         {props
         .answer
