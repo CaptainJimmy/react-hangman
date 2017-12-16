@@ -23,8 +23,8 @@ const guessesMade = () =>{
     if (props.guessesMade) {
         return (
             <ButtonGroup>
-                {props.score.guessesMade.map((item, index) => {
-                   return <Button bsSize="small" disabled key={index}>{item}</Button>
+                {props.score.guessesMadeArray.map((item, index) => {
+                   return <Button bsSize="small" disabled key={index}>{item.toUpperCase()}</Button>
                 })}
             </ButtonGroup>
         )
@@ -38,7 +38,7 @@ return (
                     <ButtonGroup>
                         {props.answer.clueArray.map((item, index) => {
                                 if (item) {
-                                    return <Button bsStyle="success" bsSize="large" disabled key={index}>{item}</Button>
+                                    return <Button bsStyle="success" bsSize="large" disabled key={index}>{item.toUpperCase()}</Button>
                                 } else {
                                     return <Button bsStyle="default" bsSize="large" key={index} disabled><Glyphicon glyph="star"/></Button>
                                 }
@@ -56,7 +56,8 @@ return (
                 </div>
                 <div id="total-word-size">
                     <h3>
-                        Number of Letters: {props.answer.numberOfLetters}
+                        Total Number of Letters in Word: {props.answer.numberOfLetters}</h3>
+                        <h3>Number of Letters Remaining to be Guessed: {props.answer.numberOfLettersRemaining} 
                     </h3>
                 </div>
             </Panel>
