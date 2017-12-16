@@ -11,6 +11,7 @@ import Guesses from './components/Guesses'
 import Keyboard from "./components/Keyboard";
 import Scoreboard from './components/Scoreboard'
 import Answerarrays from './components/Answerarrays'
+import Messages from './components/Messages'
 
 class App extends Component {
 
@@ -25,6 +26,9 @@ class App extends Component {
             incorrectGuessesRemaining: 7,
         },
         gameRunning: false,
+        messages: "",
+        messageType: "default",
+        messageDisabled: true,
         answer: {
             word: "",
             wordArray: [],
@@ -112,9 +116,6 @@ class App extends Component {
         }
     }
 
-    messages = ""
-
-
 
     pickWord = () => {
         const wordArray = ["television", "christmas", "ponderosa", "ravioli"];
@@ -155,6 +156,9 @@ class App extends Component {
         this.setState({
             score: newGameScore, 
             gameRunning: true,
+            messages: "Good Luck",
+            messageType: "info",
+            messageDisabled: false,
             answer: newAnswer,
             keyboard:newKeyboard,
         })
@@ -174,9 +178,15 @@ class App extends Component {
         let newAnswer = {...this.state.answer}
          newGameScore.totalGuessesMade++;
          newAnswer.guessesMadeArray.push(keyPressed)
+        let newMessages = ""
+        let newMessageType = ""
+        let newMessageDisabled = false
             //check to see if tthe answer is correct
         if (newAnswer.wordArray.includes(keyPressed)){
             console.log("correct")
+             newMessages="Correct"
+             newMessageType="success"
+             newMessageDisabled = false
             newGameScore.correctGuesses++ 
             newAnswer.correctGuessesArray.push(keyPressed)
             //update the arrays
@@ -189,6 +199,10 @@ class App extends Component {
             //update the fields
         } else { 
                         //update the fields 
+            console.log("incorrect")
+              newMessages="Ouch. Wrong."
+              newMessageType="danger"
+              newMessageDisabled = false
             newGameScore.incorrectGuesses++
             newGameScore.incorrectGuessesRemaining--
             newAnswer.incorrectGuessesArray.push(keyPressed)
@@ -197,29 +211,40 @@ class App extends Component {
         this.setState({
                 score: newGameScore,
                 keyboard: newKeyboard,
+                messages: newMessages,
+                messageType: newMessageType,
+                messageDisabled: newMessageDisabled,
                 answer: newAnswer
         },()=>{
 
         //game over check
         if (this.state.score.incorrectGuessesRemaining === 0) {
-            this.messages="Good Game.  Sorry you lose. The correct answer was " +this.state.answer.word
+            let newMessages="Good Game.  Sorry you lose. The correct answer was " +this.state.answer.word
+            let newMessageType="danger"
             let newScoreBoard={...this.state.score}
             newScoreBoard.gamesLost++
             newScoreBoard.gamesPlayed++
             this.setState({
                 score: newScoreBoard,
                 gameRunning: false,
+                messages: newMessages,
+                messageType: newMessageType,
+                messageDisabled: false,
             })
             this.disableKeyBoard()
         }
         else if (this.state.answer.numberOfLettersRemaining === 0 ) {
-           this.messages="Nice game. You won! Your winning answer: " +this.state.answer.word
+            let newMessages="Nice game. You won! Your winning answer: " +this.state.answer.word
+            let newMessageType="success"
             let newScoreBoard={...this.state.score}
             newScoreBoard.gamesWon++
             newScoreBoard.gamesPlayed++
             this.setState({
                 score: newScoreBoard,
                 gameRunning: false,
+                messages: newMessages,
+                messageType: newMessageType,
+                messageDisabled: false
             })
             this.disableKeyBoard()
 
@@ -245,7 +270,7 @@ class App extends Component {
                             React Hangman for those without necks. Or Keyboards.</h2>
                         <p>Click the new game button to start</p>
                         <Button id="new-game" bsStyle="danger" onClick={this.newGameHandler}>New Game</Button>
-                        <div id="messages"><h3>{this.messages}</h3></div>
+                        <Messages type={this.state.messageType} messages={this.state.messages} disabled={this.state.messageDisabled}/>
                     </Jumbotron>
                 </div>
                 <Row>

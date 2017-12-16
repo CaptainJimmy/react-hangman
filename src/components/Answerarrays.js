@@ -14,7 +14,7 @@ return (
         .correctGuessesArray
         .map((item, index) => {
             return (
-                <Button bsStyle="info" bsSize="large" key={index} disabled="true" value={item}>
+                <Button bsStyle="info" bsSize="large" key={index} value={item}>
                     {item.toUpperCase()}
                     
                 </Button>
@@ -33,7 +33,6 @@ return (
                     bsStyle="danger"
                     bsSize="large"
                     key={index}
-                    disabled="true"
                     value={item}>
                     {item.toUpperCase()}
                     
