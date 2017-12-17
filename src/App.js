@@ -157,6 +157,7 @@ class App extends Component {
             score: newGameScore, 
             gameRunning: true,
             messages: "Good Luck",
+            gameOverMessage: null,
             messageType: "info",
             messageDisabled: false,
             answer: newAnswer,
