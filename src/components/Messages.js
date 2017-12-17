@@ -1,10 +1,18 @@
 import React from "react";
-import {Panel} from 'react-bootstrap';
+import {Panel,Col} from 'react-bootstrap';
 
 const messages = props => {
-
+    const title = ( <h3><strong> {props.messages} </strong></h3> )
     return (
-        <Panel title={props.messages} bsStyle={props.type} disabled={props.disabled} />
+    <div>    
+        <Col xs={3}>
+        </Col>
+        <Col xs={6}>
+            <Panel header={title} bsStyle={props.type}/>
+        </Col>
+        <Col xs={3}>
+        </Col>
+    </div>
     )
 }
 

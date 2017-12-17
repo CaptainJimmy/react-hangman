@@ -1,13 +1,14 @@
 import React from "react";
-import {Button, Well, ButtonGroup} from 'react-bootstrap';
+import {Button,Row,Col, Well, ButtonGroup} from 'react-bootstrap';
 
 const answerarrays = props => {
 
 
 return (
-    <div>
+<Row>
+    <Col xs={6}>
         <Well>
-              <h3> Correct Guesses:</h3>
+              <h4> Correct Guesses:</h4>
             <ButtonGroup> 
         {props
         .answer
@@ -20,9 +21,11 @@ return (
                 </Button>
                 ) } ) }
                 </ButtonGroup>
-            </Well>
+        </Well>
+    </Col>
+    <Col xs={6}>
         <Well> 
-            <h3> Incorrect Guesses:</h3>
+            <h4> Incorrect Guesses:</h4>
             <ButtonGroup>
         {props
         .answer
@@ -40,7 +43,8 @@ return (
                 ) } ) }
                 </ButtonGroup>
             </Well>
-    </div>
+    </Col>
+</Row>
 )
 }
 

@@ -12,6 +12,7 @@ import Keyboard from "./components/Keyboard";
 import Scoreboard from './components/Scoreboard'
 import Answerarrays from './components/Answerarrays'
 import Messages from './components/Messages'
+import axios from 'axios'
 
 class App extends Component {
 
@@ -29,6 +30,7 @@ class App extends Component {
         messages: "",
         messageType: "default",
         messageDisabled: true,
+        gameOverMessage:  null,
         answer: {
             word: "",
             wordArray: [],
@@ -115,14 +117,12 @@ class App extends Component {
             }
         }
     }
+ 
 
-
-    pickWord = () => {
-        const wordArray = ["television", "christmas", "ponderosa", "ravioli"];
-        let newIndex = Math.floor(Math.random() * wordArray.length)
-        return wordArray[newIndex];
-    }
     newGameHandler = () => {
+                 axios.get("https://api.wordnik.com:443/v4/words.json/randomWords?hasDictionaryDef=true&includePartOfSpeech=noun&excludePartOfSpeech=conjunction&minCorpusCount=0&minLength=5&maxLength=15&limit=1&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5"
+        ).then( (result) => {
+            let pickedWord=result.data[0].word.toLowerCase();
         let newGameScore = {
             ...this.state.score
         }
@@ -133,7 +133,7 @@ class App extends Component {
         let newAnswer = {
             ...this.state.answer
         }
-        newAnswer.word = this.pickWord()
+        newAnswer.word = pickedWord
         newAnswer.wordArray = newAnswer
             .word
             .split("")
@@ -164,10 +164,11 @@ class App extends Component {
         })
     }
     }
+        )
+    }
     keyboardClickHandler = (event,row) => {
         if (this.state.gameRunning){
         let keyPressed = event.target.value
-        console.log(keyPressed)
         //set the state to disable the key
         let newKeyboard={...this.state.keyboard}
         newKeyboard[row].status[keyPressed]=true
@@ -183,7 +184,6 @@ class App extends Component {
         let newMessageDisabled = false
             //check to see if tthe answer is correct
         if (newAnswer.wordArray.includes(keyPressed)){
-            console.log("correct")
              newMessages="Correct"
              newMessageType="success"
              newMessageDisabled = false
@@ -199,7 +199,6 @@ class App extends Component {
             //update the fields
         } else { 
                         //update the fields 
-            console.log("incorrect")
               newMessages="Ouch. Wrong."
               newMessageType="danger"
               newMessageDisabled = false
@@ -228,6 +227,7 @@ class App extends Component {
                 score: newScoreBoard,
                 gameRunning: false,
                 messages: newMessages,
+                gameOverMessage: newMessages,
                 messageType: newMessageType,
                 messageDisabled: false,
             })
@@ -243,6 +243,7 @@ class App extends Component {
                 score: newScoreBoard,
                 gameRunning: false,
                 messages: newMessages,
+                gameOverMessage : newMessages,
                 messageType: newMessageType,
                 messageDisabled: false
             })
@@ -269,8 +270,9 @@ class App extends Component {
                         <h2>
                             React Hangman for those without necks. Or Keyboards.</h2>
                         <p>Click the new game button to start</p>
-                        <Button id="new-game" bsStyle="danger" onClick={this.newGameHandler}>New Game</Button>
-                        <Messages type={this.state.messageType} messages={this.state.messages} disabled={this.state.messageDisabled}/>
+                        { this.state.gameRunning ? null : <Button id="new-game" bsStyle="danger" onClick={this.newGameHandler}>New Game</Button>}
+                        { this.state.gameRunning ?<Messages type={this.state.messageType} messages={this.state.messages}/> : null }
+                        { this.state.gameOverMessage ? <Messages type={this.state.messageType} messages={this.state.gameOverMessage}/> : null }
                     </Jumbotron>
                 </div>
                 <Row>
@@ -292,9 +294,10 @@ class App extends Component {
                                 click={(event) => this.keyboardClickHandler(event,"row3")}/>
                             
                         </Panel>
-                        <Answerarrays answer={this.state.answer}/> 
                     </Col>
                 </Row>
+            <Answerarrays answer={this.state.answer}/> 
+    
             <div>
                 <Scoreboard score={this.state.score}/>
             </div>
