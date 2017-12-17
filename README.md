@@ -1,6 +1,6 @@
 # Hangman Re-Visited.... React-Visited?
 
-This is a redesign / revisit of a game I wrote in jQuery, which was a redesign of a game I wrote in vanilla javaScript.  The original game used keyboard inputs, which doesn't operate well at all in a mobile format. I rewrote the game with a jQuery / bootstrap button keyboard. 
+This is a redesign / revisit of a game I wrote in jQuery, which was a redesign of a game I wrote in vanilla javaScript.  The original game used keyboard inputs, which doesn't operate well at all in a mobile format. I rewrote the game with a jQuery / bootstrap button keyboard. The words are pulled from a random word API http://developer.wordnik.com
 
 Original jQuery Game: https://github.com/CaptainJimmy/JQueryHangman
 
@@ -12,6 +12,7 @@ This game is written entirely in React.
 
 * React
 * Bootstrap-React
+* Bootstrap 3
 * Lodash
 * Axios
 * Npm
