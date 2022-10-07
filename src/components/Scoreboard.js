@@ -1,9 +1,9 @@
 import React from "react";
-import {Panel} from 'react-bootstrap';
+import {Container} from 'react-bootstrap';
 
 const scoreboard = props => {
 return (
-     <Panel heading="Scoreboard:">
+     <Container heading="Scoreboard:">
         <div id="wins">
             <h3> Wins: {props.score.gamesWon} </h3>
         </div>
@@ -13,7 +13,7 @@ return (
         <div id="games-played">
             <h3> Games Played: {props.score.gamesPlayed} </h3>
         </div>
-    </Panel>
+    </Container>
 )
 }
 

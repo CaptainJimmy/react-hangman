@@ -1,5 +1,5 @@
 import React from "react";
-import {Button,Row,Col, Well, ButtonGroup} from 'react-bootstrap';
+import {Button,Row,Col, Container, ButtonGroup} from 'react-bootstrap';
 
 const answerarrays = props => {
 
@@ -7,7 +7,7 @@ const answerarrays = props => {
 return (
 <Row>
     <Col xs={6}>
-        <Well>
+        <Container>
               <h4> Correct Guesses:</h4>
             <ButtonGroup> 
         {props
@@ -15,16 +15,16 @@ return (
         .correctGuessesArray
         .map((item, index) => {
             return (
-                <Button bsStyle="info" bsSize="large" key={index} value={item}>
+                <Button variant="info" size="lg" key={index} value={item}>
                     {item.toUpperCase()}
                     
                 </Button>
                 ) } ) }
                 </ButtonGroup>
-        </Well>
+        </Container>
     </Col>
     <Col xs={6}>
-        <Well> 
+        <Container> 
             <h4> Incorrect Guesses:</h4>
             <ButtonGroup>
         {props
@@ -33,8 +33,8 @@ return (
         .map((item, index) => {
             return (
                 <Button
-                    bsStyle="danger"
-                    bsSize="large"
+                    variant="danger"
+                    size="lg"
                     key={index}
                     value={item}>
                     {item.toUpperCase()}
@@ -42,7 +42,7 @@ return (
                 </Button>
                 ) } ) }
                 </ButtonGroup>
-            </Well>
+            </Container>
     </Col>
 </Row>
 )

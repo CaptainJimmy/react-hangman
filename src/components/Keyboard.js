@@ -9,7 +9,7 @@ return (
         {props.keyboard.keys.map((item,index) => {
             let status = props.keyboard.status[item]
             return (
-           <Button bsStyle={props.keyboard.style} bsSize="large" onClick={props.click} key={index} disabled={status} value={item}> {item.toUpperCase()}
+           <Button variant={props.keyboard.style} size="lg" onClick={props.click} key={index} disabled={status} value={item}> {item.toUpperCase()}
             </Button>
         )
     }

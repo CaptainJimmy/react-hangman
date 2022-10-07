@@ -1,11 +1,6 @@
-import React, {Component} from 'react';
-import {
-    Button,
-    Panel,
-    Jumbotron,
-    Row,
-    Col,
-} from 'react-bootstrap';
+import React, { Component } from "react";
+import { Container, Row, Button, Col } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 import {mapValues} from 'lodash'
 import Guesses from './components/Guesses'
 import Keyboard from "./components/Keyboard";
@@ -120,8 +115,7 @@ class App extends Component {
  
 
     newGameHandler = () => {
-                 axios.get("https://api.wordnik.com:443/v4/words.json/randomWords?hasDictionaryDef=true&includePartOfSpeech=noun&excludePartOfSpeech=conjunction&minCorpusCount=0&minLength=5&maxLength=15&limit=1&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5"
-        ).then( (result) => {
+        axios.get("https://api.wordnik.com:443/v4/words.json/randomWords?hasDictionaryDef=true&includePartOfSpeech=noun&excludePartOfSpeech=conjunction&minCorpusCount=0&minLength=5&maxLength=15&limit=1&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5" ).then( (result) => {
             let pickedWord=result.data[0].word.toLowerCase();
         let newGameScore = {
             ...this.state.score
@@ -191,7 +185,7 @@ class App extends Component {
             newGameScore.correctGuesses++ 
             newAnswer.correctGuessesArray.push(keyPressed)
             //update the arrays
-            newAnswer.wordArray.map( (item,index) =>{
+            newAnswer.wordArray.forEach( (item,index) =>{
                 if (item===keyPressed){
                     newAnswer.clueArray[index]=keyPressed
                     newAnswer.numberOfLettersRemaining--
@@ -267,14 +261,14 @@ class App extends Component {
         return (
             <div className="container-fluid">
                 <div className="container">
-                    <Jumbotron>
+                    <Container>
                         <h2>
                             React Hangman for those without necks. Or Keyboards.</h2>
                         <p>Click the new game button to start</p>
-                        { this.state.gameRunning ? null : <Button id="new-game" bsStyle="danger" onClick={this.newGameHandler}>New Game</Button>}
+                        { this.state.gameRunning ? null : <Button id="new-game" variant="danger" onClick={this.newGameHandler}>New Game</Button>}
                         { this.state.gameRunning ?<Messages type={this.state.messageType} messages={this.state.messages}/> : null }
                         { this.state.gameOverMessage ? <Messages type={this.state.messageType} messages={this.state.gameOverMessage}/> : null }
-                    </Jumbotron>
+                    </Container>
                 </div>
                 <Row>
                     <Guesses
@@ -283,7 +277,7 @@ class App extends Component {
                         score={this.state.score}/>
 
                     <Col sm={6} xs={12}>
-                        <Panel header="Keyboard:">
+                        <Container header="Keyboard:">
                             <Keyboard
                                 keyboard={this.state.keyboard.row1}
                                 click={(event) => this.keyboardClickHandler(event,"row1")}/>
@@ -294,7 +288,7 @@ class App extends Component {
                                 keyboard={this.state.keyboard.row3}
                                 click={(event) => this.keyboardClickHandler(event,"row3")}/>
                             
-                        </Panel>
+                        </Container>
                     </Col>
                 </Row>
             <Answerarrays answer={this.state.answer}/> 
